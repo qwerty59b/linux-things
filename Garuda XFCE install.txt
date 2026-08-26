@@ -1,0 +1,43 @@
+sudo pacman -Syy archlinux-keyring
+
+sudo pacman -Syu openssh samba jre-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy telegram-desktop base-devel gnome-disk-utility steam wine-staging wine-mono winetricks protonplus faugus-launcher umu-launcher gamemode mangohud vulkan-tools ntfs-3g ventoy gearlever 
+
+
+bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
+
+
+#pipx install git+https://github.com/atscub/nautapy.git
+
+
+
+
+
+
+
+#######Fixes#######
+sudo rm -R /var/lib/pacman/sync
+sudo rm /var/lib/pacman/db.lck
+
+
+
+#otros
+python-pipx 
+mpv
+fish
+scrcpy
+filezilla
+qbittorrent
+unzip
+goverlay 
+ksnip
+pacman-contrib
+unzip
+qdiskinfo aur
+media-downloader aur
+docker 
+docker-compose 
+freerdp
+
+
+#wget -q https://raw.githubusercontent.com/ivan-hc/AM/main/AM-INSTALLER && chmod a+x ./AM-INSTALLER && ./AM-INSTALLER
+
