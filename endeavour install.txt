@@ -1,22 +1,24 @@
 sudo pacman -Syy archlinux-keyring
 
-sudo pacman -Syu openssh samba jre-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine-staging wine-mono winetricks gamemode vulkan-tools flatpak
+sudo sh -c 'echo "#" > /etc/pacman.d/chaotic-mirrorlist'&& sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && sudo pacman-key --lsign-key 3056513887B78AEB && sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' && sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
+sudo mv /etc/pacman.d/chaotic-mirrorlist.pacnew /etc/pacman.d/chaotic-mirrorlist
+
+
+# Agregar a pacman.conf
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist
+
+sudo pacman -Syu openssh samba jre-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant snapper-support telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine-staging wine-mono winetricks protonplus faugus-launcher umu-launcher gamemode mangohud vulkan-tools ntfs-3g ventoy gearlever btop mintstick
 
 
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
 
 bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
 
-yay -S ventoy-bin heroic-games-launcher-bin
-
-yay -G snapper-support
-
-pipx install git+https://github.com/atscub/nautapy.git
-
 sudo pacman -Rs firewalld plasma-browser-integration
 
-flatpak install flathub it.mijorus.gearlever
+## pipx install git+https://github.com/atscub/nautapy.git
 
 
 
@@ -50,3 +52,10 @@ freerdp
 
 #wget -q https://raw.githubusercontent.com/ivan-hc/AM/main/AM-INSTALLER && chmod a+x ./AM-INSTALLER && ./AM-INSTALLER
 
+
+
+servicios a comprobar
+
+akonadi
+baloo
+kactivitymanagerd
