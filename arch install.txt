@@ -1,0 +1,48 @@
+sudo pacman -Rs plasma-browser-integration
+
+
+sudo pacman -Syy archlinux-keyring
+
+
+sudo pacman -Syu openssh samba jre-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine-staging wine-mono winetricks umu-launcher gamemode mangohud vulkan-tools ntfs-3g htop
+
+
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+
+yay -S snapper-support protonup-qt-bin faugus-launcher ventoy-bin mintstick
+
+git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
+
+bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
+
+
+## pipx install git+https://github.com/atscub/nautapy.git
+
+
+chaotic repos    gearlever
+
+
+
+#######Fixes#######
+sudo rm -R /var/lib/pacman/sync
+sudo rm /var/lib/pacman/db.lck
+
+
+
+#otros
+python-pipx 
+mpv
+scrcpy
+filezilla
+qbittorrent
+goverlay 
+ksnip
+pacman-contrib
+unzip
+qdiskinfo aur
+media-downloader aur
+docker 
+docker-compose 
+freerdp
+
