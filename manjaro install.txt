@@ -1,17 +1,16 @@
 sudo pacman -Rs plasma-browser-integration
 
-sudo pacman -Sy archlinux-keyring manjaro-keyring zram-generator gnome-disk-utility telegram-desktop
 
-sudo pacman -Syu openssh samba jre-openjdk krename audacious smplayer mpv mkvtoolnix-gui steam steam-native-runtime wine-staging wine-mono gamemode winetricks protonup-qt ventoy gearlever handbrake mediainfo-gui
-
+sudo pacman -Syu openssh samba archlinux-keyring manjaro-keyring zram-generator gnome-disk-utility telegram-desktop jre-openjdk krename audacious smplayer mpv mkvtoolnix-gui steam wine wine-mono gamemode winetricks ventoy gearlever handbrake mediainfo-gui
 
 pamac install yay-bin
 
+yay -S faugus-launcher
+
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
 
-bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
 
-#pipx install git+https://github.com/atscub/nautapy.git
+bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
 
 
 
@@ -39,4 +38,4 @@ unzip
 qdiskinfo aur
 media-downloader aur
 
-wget -q https://raw.githubusercontent.com/ivan-hc/AM/main/AM-INSTALLER && chmod a+x ./AM-INSTALLER && ./AM-INSTALLER
+
