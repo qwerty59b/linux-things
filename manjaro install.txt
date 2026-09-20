@@ -1,7 +1,7 @@
 sudo pacman -Rs plasma-browser-integration
 
 
-sudo pacman -Syu openssh samba archlinux-keyring manjaro-keyring zram-generator gnome-disk-utility telegram-desktop jre-openjdk krename audacious smplayer mpv mkvtoolnix-gui steam wine wine-mono gamemode winetricks ventoy gearlever handbrake mediainfo-gui
+sudo pacman -Syu ntfs-3g openssh samba archlinux-keyring manjaro-keyring zram-generator gnome-disk-utility telegram-desktop jre-openjdk krename audacious smplayer mpv mkvtoolnix-gui steam wine wine-mono gamemode winetricks mangohud ventoy gearlever handbrake mediainfo-gui android-tools
 
 pamac install yay-bin
 
