@@ -1,0 +1,41 @@
+sudo pacman -Syy archlinux-keyring
+
+
+sudo pacman -Syu ntfs-3g openssh samba jre-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel zram-generator fish steam wine wine-mono winetricks umu-launcher gamemode mangohud vulkan-tools htop extension-manager android-tools
+
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+yay -S snapper-support faugus-launcher ventoy-bin mintstick mangojuice-bin
+
+bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
+
+
+## pipx install git+https://github.com/atscub/nautapy.git
+
+
+
+
+
+
+#######Fixes#######
+sudo rm -R /var/lib/pacman/sync
+sudo rm /var/lib/pacman/db.lck
+
+
+
+#otros
+python-pipx 
+mpv
+scrcpy
+filezilla
+qbittorrent
+goverlay 
+ksnip
+pacman-contrib
+unzip
+qdiskinfo aur
+media-downloader aur
+docker 
+docker-compose 
+freerdp
+
