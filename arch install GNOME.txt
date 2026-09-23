@@ -5,12 +5,12 @@ sudo pacman -Syu ntfs-3g openssh samba jre-openjdk krename audacious smplayer ha
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-yay -S snapper-support faugus-launcher ventoy-bin mintstick mangojuice-bin
+yay -S snapper-support faugus-launcher ventoy-bin mintstick mangojuice-bin nautilus-backspace
 
 bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
 
 
-## pipx install git+https://github.com/atscub/nautapy.git
+
 
 
 
