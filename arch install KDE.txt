@@ -17,13 +17,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
 
 
-## pipx install git+https://github.com/atscub/nautapy.git
-
-
-chaotic repos    gearlever
-
-
-sudo systemctl --global mask akonadi kactivitymanagerd
+sudo systemctl stop cups bluetooth ModemManager && sudo systemctl disable cups bluetooth ModemManager
 
 
 
