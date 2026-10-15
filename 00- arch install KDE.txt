@@ -9,9 +9,7 @@ sudo pacman -Syu ntfs-3g openssh samba jre25-openjdk krename audacious smplayer 
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-yay -S snapper-support faugus-launcher ventoy-bin mintstick mangojuice-bin shelly-bin stacer-bin
-
-bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
+yay -S snapper-support faugus-launcher ventoy-bin freedownloadmanager mangojuice-bin shelly-bin stacer-bin
 
 
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
@@ -43,3 +41,4 @@ docker
 docker-compose 
 freerdp
 
+bash <(curl -fsSL https://raw.githubusercontent.com/amir1376/ab-download-manager/master/scripts/install.sh)
