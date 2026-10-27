@@ -1,15 +1,15 @@
-sudo pacman -Rns plasma-browser-integration discover plasma-vault
+sudo pacman -Rns plasma-browser-integration discover
 
 
 sudo pacman -Syy archlinux-keyring
 
 
-sudo pacman -Syu ntfs-3g openssh samba jre25-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine wine-mono winetricks umu-launcher gamemode gamescope mangohud vulkan-tools htop android-tools
+sudo pacman -Syu ntfs-3g openssh samba jre25-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine wine-mono winetricks umu-launcher gamemode gamescope mangohud vulkan-tools htop android-tools goverlay
 
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-yay -S snapper-support faugus-launcher ventoy-bin freedownloadmanager mangojuice-bin shelly-bin stacer-bin
+yay -S snapper-support faugus-launcher ventoy-bin netpeek mangojuice-bin shelly-bin stacer-bin
 
 
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
