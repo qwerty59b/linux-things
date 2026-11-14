@@ -1,4 +1,4 @@
-sudo pacman -Rns plasma-browser-integration discover plasma-workspace-wallpapers
+sudo pacman -Rns plasma-browser-integration discover plasma-workspace-wallpapers plasma-vault keepassxc geany sweeper timeshift vim grsync abiword gnumeric filezilla qbittorrent guvcview k3b vokoscreen
 
 
 sudo pacman -Syy archlinux-keyring
@@ -9,7 +9,7 @@ sudo pacman -Syu ntfs-3g openssh samba jre25-openjdk krename audacious smplayer 
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-yay -S snapper-support faugus-launcher ventoy-bin netpeek mangojuice-bin winbox shelly-bin stacer-bin
+yay -S --noconfirm snapper-support faugus-launcher ventoy-bin netpeek mangojuice-bin winbox shelly-bin stacer-bin
 
 
 git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
