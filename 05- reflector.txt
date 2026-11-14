@@ -1,2 +1,2 @@
-sudo reflector --latest 25 --sort rate --save /etc/pacman.d/mirrorlist && sudo pacman -Syy
+sudo reflector --latest 25 --sort rate --protocol https --save /etc/pacman.d/mirrorlist && sudo pacman -Syy
 
