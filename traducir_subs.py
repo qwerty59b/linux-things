@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Traductor de subtítulos (.srt / .vtt) con LibreTranslate. Funciona en Linux y Windows.
+"""Traductor de subtítulos (.srt / .vtt / .ass / .ssa) con LibreTranslate. Funciona en Linux y Windows.
 
 Requisito (una sola vez):   pipx install libretranslate
 Uso:                        python traducir_subs.py      (abre un menú)
@@ -60,6 +60,11 @@ import argostranslate.package as apkg  # noqa: E402
 TAG_RE = re.compile(r"<[^>]+>|\{\\[^}]*\}")
 TIME_RE = re.compile(r"-->")
 NUM_RE = re.compile(r"^\d+$")
+ASS_INICIO_RE = re.compile(r"^(?:\{[^}]*\})+")        # etiquetas {\an8}{\pos(..)} al inicio de la línea
+ASS_TAG_RE = re.compile(r"\{[^}]*\}")
+ASS_DIBUJO_RE = re.compile(r"\\p[1-9]")               # dibujos vectoriales: no se traducen
+ASS_SALTO_RE = re.compile(r"\\[Nnh]")
+EXTENSIONES = (".srt", ".vtt", ".ass", ".ssa")
 
 
 # ----------------------------------------------------------------------------
@@ -275,7 +280,71 @@ def leer(path):
     return raw.decode("utf-8", errors="replace")
 
 
+def traducir_lista(pendientes, src, dst):
+    """Traduce una lista de textos por lotes mostrando progreso y tiempo restante."""
+    traducidos = []
+    total = len(pendientes)
+    if not total:
+        return traducidos
+    inicio = time.time()
+    print(f"    0/{total} (0%)", end="", flush=True)
+    for i in range(0, total, CHUNK):
+        traducidos += traducir(pendientes[i:i + CHUNK], src, dst)
+        hechos = len(traducidos)
+        resta = (time.time() - inicio) / hechos * (total - hechos)
+        print(f"\r    {hechos}/{total} ({hechos * 100 // total}%) - quedan ~{int(resta // 60)}m {int(resta % 60)}s   ",
+              end="", flush=True)
+    print()
+    return traducidos
+
+
+def traducir_ass(path, out, src, dst):
+    """Traduce .ass/.ssa: solo el texto de las líneas Dialogue, conservando estilos, timing y
+    las etiquetas del inicio de cada línea ({\\an8}, {\\pos(..)}, ...)."""
+    lineas = leer(path).replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    n_campos, idx_texto = 10, 9          # valores por defecto del formato estándar
+    en_eventos = False
+    items = []                            # (índice de línea, partes, etiquetas iniciales)
+    pendientes = []
+    for i, ln in enumerate(lineas):
+        s = ln.strip()
+        if s.startswith("["):
+            en_eventos = s.lower() == "[events]"
+            continue
+        if not en_eventos:
+            continue
+        if s.lower().startswith("format:"):
+            campos = [c.strip().lower() for c in s.split(":", 1)[1].split(",")]
+            if "text" in campos:
+                n_campos, idx_texto = len(campos), campos.index("text")
+            continue
+        if not s.startswith("Dialogue:"):
+            continue
+        partes = ln.split(":", 1)[1].split(",", n_campos - 1)
+        if len(partes) < n_campos:
+            continue
+        texto = partes[idx_texto]
+        if ASS_DIBUJO_RE.search(texto):
+            continue
+        m = ASS_INICIO_RE.match(texto)
+        inicio = m.group(0) if m else ""
+        limpio = ASS_TAG_RE.sub("", texto[len(inicio):])
+        limpio = " ".join(ASS_SALTO_RE.sub(" ", limpio).split())
+        if not limpio:
+            continue
+        items.append((i, partes, inicio))
+        pendientes.append(limpio)
+
+    traducidos = traducir_lista(pendientes, src, dst)
+    for (i, partes, inicio), t in zip(items, traducidos):
+        partes[idx_texto] = inicio + t
+        lineas[i] = "Dialogue:" + ",".join(partes)
+    out.write_text("\n".join(lineas), encoding="utf-8")
+
+
 def traducir_archivo(path, out, src, dst):
+    if path.suffix.lower() in (".ass", ".ssa"):
+        return traducir_ass(path, out, src, dst)
     texto = leer(path).replace("\r\n", "\n").replace("\r", "\n")
     bloques = []  # (encabezado, texto_a_traducir | None, bloque_original)
     for bloque in texto.split("\n\n"):
@@ -293,17 +362,7 @@ def traducir_archivo(path, out, src, dst):
         bloques.append((head, joined, bloque))
 
     pendientes = [b[1] for b in bloques if b[1]]
-    traducidos = []
-    total = len(pendientes)
-    inicio = time.time()
-    print(f"    0/{total} (0%)", end="", flush=True)
-    for i in range(0, total, CHUNK):
-        traducidos += traducir(pendientes[i:i + CHUNK], src, dst)
-        hechos = len(traducidos)
-        resta = (time.time() - inicio) / hechos * (total - hechos)
-        print(f"\r    {hechos}/{total} ({hechos * 100 // total}%) - quedan ~{int(resta // 60)}m {int(resta % 60)}s   ",
-              end="", flush=True)
-    print()
+    traducidos = traducir_lista(pendientes, src, dst)
 
     it = iter(traducidos)
     salida = []
@@ -324,9 +383,9 @@ def traducir_carpeta():
 
     patron = "**/*" if recursivo else "*"
     archivos = [p for p in root.glob(patron)
-                if p.suffix.lower() in (".srt", ".vtt") and not p.stem.endswith(f".{dst}")]
+                if p.suffix.lower() in EXTENSIONES and not p.stem.endswith(f".{dst}")]
     if not archivos:
-        print("No encontré subtítulos .srt/.vtt.")
+        print("No encontré subtítulos .srt/.vtt/.ass/.ssa.")
         return
 
     if not asegurar_par(src, dst):
