@@ -118,13 +118,61 @@ def modelos_instalados():
 
 
 def ver_modelos():
-    mods = modelos_instalados()
-    if not mods:
-        print("No hay modelos instalados todavía.")
+    while True:
+        mods = modelos_instalados()
+        if not mods:
+            print("No hay modelos instalados todavía.")
+            return
+        print("Modelos instalados:")
+        for p in mods:
+            print(f"  {p.from_code} -> {p.to_code}   (versión {p.package_version})")
+        print("\n 1) Eliminar modelos\n 0) Volver")
+        op = preguntar("Elige una opción: ")
+        if op in ("", "0"):
+            return
+        if op == "1":
+            eliminar_modelos(mods)
+        else:
+            print("Opción no válida.")
+
+
+def parsear_seleccion(texto, total):
+    """'1,3' / '1 3' / 'todos' -> lista de índices (base 0), o None si es inválido."""
+    if texto.lower() in ("t", "todos"):
+        return list(range(total))
+    idx = set()
+    for parte in re.split(r"[,\s]+", texto):
+        if not parte:
+            continue
+        if not parte.isdigit() or not 1 <= int(parte) <= total:
+            return None
+        idx.add(int(parte) - 1)
+    return sorted(idx) or None
+
+
+def eliminar_modelos(mods):
+    print("\nEliminar modelos:")
+    for i, p in enumerate(mods, 1):
+        print(f"  {i}) {p.from_code} -> {p.to_code}   (versión {p.package_version})")
+    print("(Si quieres conservar un respaldo, usa antes la opción 5 del menú principal.)")
+    sel = preguntar("Números a eliminar (ej. 1,3), 'todos', o Enter para cancelar: ")
+    if not sel:
         return
-    print("Modelos instalados:")
-    for p in mods:
-        print(f"  {p.from_code} -> {p.to_code}   (versión {p.package_version})")
+    indices = parsear_seleccion(sel, len(mods))
+    if indices is None:
+        print("Selección no válida.")
+        return
+    elegidos = [mods[i] for i in indices]
+    print("Se eliminarán: " + ", ".join(f"{p.from_code}->{p.to_code}" for p in elegidos))
+    if preguntar("¿Confirmas? (s/N): ").lower() not in ("s", "si", "sí", "y"):
+        print("Cancelado.")
+        return
+    for p in elegidos:
+        try:
+            apkg.uninstall(p)
+            print(f"Eliminado {p.from_code}->{p.to_code}")
+        except Exception as e:
+            print(f"No se pudo eliminar {p.from_code}->{p.to_code}: {e}")
 
 
 def descargar_par(src, dst):
@@ -413,7 +461,7 @@ def traducir_carpeta():
 MENU = """
 === Traductor de subtítulos ===
  1) Traducir subtítulos de una carpeta
- 2) Ver modelos de idioma instalados
+ 2) Ver / eliminar modelos de idioma instalados
  3) Descargar un modelo de idioma nuevo
  4) Actualizar los modelos instalados
  5) Exportar modelos a una carpeta (respaldo)
