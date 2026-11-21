@@ -1,18 +1,18 @@
-sudo pacman -Rns plasma-browser-integration discover plasma-workspace-wallpapers plasma-vault keepassxc geany sweeper timeshift vim grsync abiword gnumeric filezilla qbittorrent guvcview k3b vokoscreen
+sudo pacman -Rns plasma-browser-integration discover plasma-workspace-wallpapers plasma-vault keepassxc geany sweeper timeshift vim grsync abiword gnumeric filezilla qbittorrent guvcview k3b vokoscreen aisleriot firefox kdeconnect
 
 
 sudo pacman -Syy archlinux-keyring
 
 
-sudo pacman -Syu ntfs-3g openssh samba jre25-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine wine-mono winetricks umu-launcher gamemode gamescope mangohud vulkan-tools htop android-tools
+sudo pacman -Syu vivaldi ntfs-3g openssh samba jre25-openjdk krename audacious smplayer handbrake mkvtoolnix-gui mediainfo-gui sshfs fastfetch scrcpy btrfs-assistant telegram-desktop base-devel gnome-disk-utility zram-generator fish steam wine wine-mono winetricks umu-launcher gamemode gamescope mangohud vulkan-tools htop android-tools
 
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-yay -S --noconfirm snapper-support faugus-launcher ventoy-bin netpeek mangojuice-bin winbox shelly-bin stacer-bin
+yay -S --noconfirm snapper-support faugus-launcher ventoy-bin mangojuice-bin winbox
 
 
-git clone https://github.com/dfaust/plasma-applet-netspeed-widget && cd plasma-applet-netspeed-widget && ./install.sh
+curl -fsSL https://github.com/yassine20011/kvitals/releases/latest/download/install-remote.sh | bash
 
 
 sudo systemctl stop cups bluetooth ModemManager && sudo systemctl disable cups bluetooth ModemManager
@@ -26,6 +26,9 @@ sudo rm /var/lib/pacman/db.lck
 
 
 #otros
+shelly-bin aur
+stacer-bin aur
+netpeek aur
 python-pipx 
 mpv
 scrcpy
